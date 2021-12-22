@@ -217,7 +217,7 @@ steps:
         - "dist/artifacts/*"
     when:
       instance:
-        - drone-publish.rancher.io
+        - drone.suse.dev
       ref:
         - refs/head/master
         - refs/tags/*
@@ -239,7 +239,7 @@ steps:
         from_secret: docker_username
     when:
       instance:
-        - drone-publish.rancher.io
+        - drone.suse.dev
       ref:
         - refs/head/master
         - refs/tags/*
@@ -273,7 +273,7 @@ steps:
     template: "awony/rancher-webhook:${DRONE_TAG}-ARCH"
   when:
     instance:
-    - drone-publish.rancher.io
+    - drone.suse.dev
     ref:
     - refs/head/master
     - refs/tags/*
