@@ -183,7 +183,6 @@
 # - name: docker
 #   host:
 #     path: /var/run/docker.sock
-
 ---
 kind: pipeline
 name: s390x
@@ -253,7 +252,6 @@ volumes:
       path: /var/run/docker.sock
 
 ---
-
 kind: pipeline
 name: manifest
 
