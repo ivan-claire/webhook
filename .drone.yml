@@ -1,188 +1,188 @@
----
-kind: pipeline
-name: amd64
+# ---
+# kind: pipeline
+# name: amd64
 
-platform:
-  os: linux
-  arch: amd64
+# platform:
+#   os: linux
+#   arch: amd64
 
-steps:
-- name: build
-  image: rancher/dapper:v0.4.1
-  commands:
-  - dapper ci
-  volumes:
-  - name: docker
-    path: /var/run/docker.sock
+# steps:
+# - name: build
+#   image: rancher/dapper:v0.4.1
+#   commands:
+#   - dapper ci
+#   volumes:
+#   - name: docker
+#     path: /var/run/docker.sock
 
-- name: github_binary_release
-  image: plugins/github-release
-  settings:
-    api_key:
-      from_secret: github_token
-    prerelease: true
-    checksum:
-    - sha256
-    checksum_file: CHECKSUMsum-amd64.txt
-    checksum_flatten: true
-    files:
-    - "dist/artifacts/*"
-  when:
-    instance:
-    - drone-publish.rancher.io
-    ref:
-    - refs/head/master
-    - refs/tags/*
-    event:
-    - tag
+# - name: github_binary_release
+#   image: plugins/github-release
+#   settings:
+#     api_key:
+#       from_secret: github_token
+#     prerelease: true
+#     checksum:
+#     - sha256
+#     checksum_file: CHECKSUMsum-amd64.txt
+#     checksum_flatten: true
+#     files:
+#     - "dist/artifacts/*"
+#   when:
+#     instance:
+#     - drone-publish.rancher.io
+#     ref:
+#     - refs/head/master
+#     - refs/tags/*
+#     event:
+#     - tag
 
-- name: docker-publish
-  image: plugins/docker
-  settings:
-    dockerfile: package/Dockerfile
-    password:
-      from_secret: docker_password
-    repo: "rancher/rancher-webhook"
-    tag: "${DRONE_TAG}-amd64"
-    username:
-      from_secret: docker_username
-  when:
-    instance:
-    - drone-publish.rancher.io
-    ref:
-    - refs/head/master
-    - refs/tags/*
-    event:
-    - tag
+# - name: docker-publish
+#   image: plugins/docker
+#   settings:
+#     dockerfile: package/Dockerfile
+#     password:
+#       from_secret: docker_password
+#     repo: "rancher/rancher-webhook"
+#     tag: "${DRONE_TAG}-amd64"
+#     username:
+#       from_secret: docker_username
+#   when:
+#     instance:
+#     - drone-publish.rancher.io
+#     ref:
+#     - refs/head/master
+#     - refs/tags/*
+#     event:
+#     - tag
 
-volumes:
-- name: docker
-  host:
-    path: /var/run/docker.sock
+# volumes:
+# - name: docker
+#   host:
+#     path: /var/run/docker.sock
 
----
-kind: pipeline
-name: arm64
+# ---
+# kind: pipeline
+# name: arm64
 
-platform:
-  os: linux
-  arch: arm64
+# platform:
+#   os: linux
+#   arch: arm64
 
-steps:
-- name: build
-  image: rancher/dapper:v0.4.1
-  commands:
-  - dapper ci
-  volumes:
-  - name: docker
-    path: /var/run/docker.sock
+# steps:
+# - name: build
+#   image: rancher/dapper:v0.4.1
+#   commands:
+#   - dapper ci
+#   volumes:
+#   - name: docker
+#     path: /var/run/docker.sock
 
-- name: github_binary_release
-  image: plugins/github-release
-  settings:
-    api_key:
-      from_secret: github_token
-    prerelease: true
-    checksum:
-    - sha256
-    checksum_file: CHECKSUMsum-arm64.txt
-    checksum_flatten: true
-    files:
-    - "dist/artifacts/*"
-  when:
-    instance:
-    - drone-publish.rancher.io
-    ref:
-    - refs/head/master
-    - refs/tags/*
-    event:
-    - tag
+# - name: github_binary_release
+#   image: plugins/github-release
+#   settings:
+#     api_key:
+#       from_secret: github_token
+#     prerelease: true
+#     checksum:
+#     - sha256
+#     checksum_file: CHECKSUMsum-arm64.txt
+#     checksum_flatten: true
+#     files:
+#     - "dist/artifacts/*"
+#   when:
+#     instance:
+#     - drone-publish.rancher.io
+#     ref:
+#     - refs/head/master
+#     - refs/tags/*
+#     event:
+#     - tag
 
-- name: docker-publish
-  image: plugins/docker
-  settings:
-    dockerfile: package/Dockerfile
-    password:
-      from_secret: docker_password
-    repo: "rancher/rancher-webhook"
-    tag: "${DRONE_TAG}-arm64"
-    username:
-      from_secret: docker_username
-  when:
-    instance:
-    - drone-publish.rancher.io
-    ref:
-    - refs/head/master
-    - refs/tags/*
-    event:
-    - tag
+# - name: docker-publish
+#   image: plugins/docker
+#   settings:
+#     dockerfile: package/Dockerfile
+#     password:
+#       from_secret: docker_password
+#     repo: "rancher/rancher-webhook"
+#     tag: "${DRONE_TAG}-arm64"
+#     username:
+#       from_secret: docker_username
+#   when:
+#     instance:
+#     - drone-publish.rancher.io
+#     ref:
+#     - refs/head/master
+#     - refs/tags/*
+#     event:
+#     - tag
 
-volumes:
-- name: docker
-  host:
-    path: /var/run/docker.sock
+# volumes:
+# - name: docker
+#   host:
+#     path: /var/run/docker.sock
 
----
-kind: pipeline
-name: arm
+# ---
+# kind: pipeline
+# name: arm
 
-platform:
-  os: linux
-  arch: arm
+# platform:
+#   os: linux
+#   arch: arm
 
-steps:
-- name: build
-  image: rancher/dapper:v0.4.1
-  commands:
-  - dapper ci
-  volumes:
-  - name: docker
-    path: /var/run/docker.sock
+# steps:
+# - name: build
+#   image: rancher/dapper:v0.4.1
+#   commands:
+#   - dapper ci
+#   volumes:
+#   - name: docker
+#     path: /var/run/docker.sock
 
-- name: github_binary_release
-  image: plugins/github-release
-  settings:
-    api_key:
-      from_secret: github_token
-    prerelease: true
-    checksum:
-    - sha256
-    checksum_file: CHECKSUMsum-arm.txt
-    checksum_flatten: true
-    files:
-    - "dist/artifacts/*"
-  when:
-    instance:
-    - drone-publish.rancher.io
-    ref:
-    - refs/head/master
-    - refs/tags/*
-    event:
-    - tag
+# - name: github_binary_release
+#   image: plugins/github-release
+#   settings:
+#     api_key:
+#       from_secret: github_token
+#     prerelease: true
+#     checksum:
+#     - sha256
+#     checksum_file: CHECKSUMsum-arm.txt
+#     checksum_flatten: true
+#     files:
+#     - "dist/artifacts/*"
+#   when:
+#     instance:
+#     - drone-publish.rancher.io
+#     ref:
+#     - refs/head/master
+#     - refs/tags/*
+#     event:
+#     - tag
 
-- name: docker-publish
-  image: plugins/docker
-  settings:
-    dockerfile: package/Dockerfile
-    password:
-      from_secret: docker_password
-    repo: "rancher/rancher-webhook"
-    tag: "${DRONE_TAG}-arm"
-    username:
-      from_secret: docker_username
-  when:
-    instance:
-    - drone-publish.rancher.io
-    ref:
-    - refs/head/master
-    - refs/tags/*
-    event:
-    - tag
+# - name: docker-publish
+#   image: plugins/docker
+#   settings:
+#     dockerfile: package/Dockerfile
+#     password:
+#       from_secret: docker_password
+#     repo: "rancher/rancher-webhook"
+#     tag: "${DRONE_TAG}-arm"
+#     username:
+#       from_secret: docker_username
+#   when:
+#     instance:
+#     - drone-publish.rancher.io
+#     ref:
+#     - refs/head/master
+#     - refs/tags/*
+#     event:
+#     - tag
 
-volumes:
-- name: docker
-  host:
-    path: /var/run/docker.sock
+# volumes:
+# - name: docker
+#   host:
+#     path: /var/run/docker.sock
 
 ---
 kind: pipeline
@@ -234,7 +234,7 @@ steps:
       dockerfile: package/Dockerfile
       password:
         from_secret: docker_password
-      repo: "rancher/rancher-webhook"
+      repo: "awony/rancher-webhook"
       tag: "${DRONE_TAG}-s390x"
       username:
         from_secret: docker_username
@@ -270,12 +270,9 @@ steps:
     password:
       from_secret: docker_password
     platforms:
-      - linux/amd64
-      - linux/arm64
-      - linux/arm
       - linux/s390x
-    target: "rancher/rancher-webhook:${DRONE_TAG}"
-    template: "rancher/rancher-webhook:${DRONE_TAG}-ARCH"
+    target: "awony/rancher-webhook:${DRONE_TAG}"
+    template: "awony/rancher-webhook:${DRONE_TAG}-ARCH"
   when:
     instance:
     - drone-publish.rancher.io
@@ -286,7 +283,4 @@ steps:
     - tag
 
 depends_on:
-- amd64
-- arm64
-- arm
 - s390x
